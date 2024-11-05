@@ -320,42 +320,43 @@ networks:
 #這個 docker-compose.yml 文件描述了一個多服務的 Docker 環境，涉及多個服務器的配置，包括 Airflow、Zookeeper、Kafka、Postgres、Pinot、Superset 等。以下是對各個部分的詳細分析：
 
 #1. 共享卷 (volumes) 和共享配置 (x-airflow-common)
-#   volumes: 定義了一個名為 postgres-db-volume 的卷，用於持久化數據庫數據。
-#   x-airflow-common: 定義了一個共享的 Airflow 配置塊 (&airflow-common)，用於多個 Airflow 服務共享相同的配置，如環境變量和網絡依賴。
+# volumes: 定義了一個名為 postgres-db-volume 的卷，用於持久化數據庫數據。
+# x-airflow-common: 定義了一個共享的 Airflow 配置塊 (&airflow-common)，用於多個 Airflow 服務共享相同的配置，如環境變量和網絡依賴。
 # 2. 各個服務的配置
-#   Zookeeper
-#   zookeeper: 用於管理 Kafka 中的分布式數據協調。
-#   使用 Confluent Zookeeper Docker 映像 (confluentinc/cp-zookeeper:7.4.0)。
-#   暴露 2181 端口，用於客戶端連接。
-#   Kafka Broker (kafka_broker)
-#   使用 Redpanda 作為 Kafka 的替代方案 (redpandadata/redpanda:v24.1.1)。
-#   進行了一些配置來設置 Kafka 的廣告地址和節點 ID，暴露的端口包括 19092（Kafka）和 18081（Schema Registry）。
-#   適合開發和容器環境 (--mode dev-container)。
-#   Kafka Console (console)
-#   用於管理 Kafka 的 UI 控制台。
-#   配置中提到 Kafka 的 brokers 和 Schema Registry 地址以供監控和管理。
-#   PostgreSQL (postgres)
-#   使用 PostgreSQL 13 作為 Airflow 的後端數據庫。
-#   定義了數據庫名稱 (airflow)、用戶名和密碼。
-#   使用 postgres-db-volume 來保持數據庫的持久性。
-# 3. Apache Airflow
-#   多個 Airflow 服務，共享了相同的基礎配置。
-#   airflow-webserver：運行 Airflow 的 Web UI，並暴露在端口 8180 上。
-#   airflow-scheduler：負責運行定義的 DAG 任務。
-#   airflow-init：初始化腳本，用於檢查 Airflow 版本、資源可用性等。
-# 4. Pinot（數據庫查詢和分析）
-#   包含三個 Pinot 服務：
-#   pinot-controller：負責管理和控制 Pinot 集群。
-#   pinot-broker 和 pinot-server：用於處理查詢請求和服務數據。
-# 所有 Pinot 服務都依賴 Zookeeper 來協調集群信息。
-# 5. Superset
-#   superset 是一個數據可視化工具，通常用於展示和分析數據。
-#   使用 Dockerfile 構建 Superset，暴露 8088 端口。
-# 6. 網絡 (networks)
-#   定義了一個共享的名為 ctwang 的網絡，使得所有的服務可以通過內部網絡進行通信。
-# 小結
-#   這個 docker-compose.yml 文件配置了一個完整的數據工程工作流，包括以下功能：
-#   數據協調（通過 Zookeeper 和 Kafka）。
-#   數據存儲和計算（通過 Postgres 和 Airflow）。
-#   數據查詢（通過 Pinot）。
-#   數據可視化（通過 Superset）。
+# Zookeeper
+zookeeper: 用於管理 Kafka 中的分布式數據協調。
+使用 Confluent Zookeeper Docker 映像 (confluentinc/cp-zookeeper:7.4.0)。
+暴露 2181 端口，用於客戶端連接。
+Kafka Broker (kafka_broker)
+使用 Redpanda 作為 Kafka 的替代方案 (redpandadata/redpanda:v24.1.1)。
+進行了一些配置來設置 Kafka 的廣告地址和節點 ID，暴露的端口包括 19092（Kafka）和 18081（Schema Registry）。
+適合開發和容器環境 (--mode dev-container)。
+Kafka Console (console)
+用於管理 Kafka 的 UI 控制台。
+配置中提到 Kafka 的 brokers 和 Schema Registry 地址以供監控和管理。
+PostgreSQL (postgres)
+使用 PostgreSQL 13 作為 Airflow 的後端數據庫。
+定義了數據庫名稱 (airflow)、用戶名和密碼。
+使用 postgres-db-volume 來保持數據庫的持久性。
+3. Apache Airflow
+多個 Airflow 服務，共享了相同的基礎配置。
+airflow-webserver：運行 Airflow 的 Web UI，並暴露在端口 8180 上。
+airflow-scheduler：負責運行定義的 DAG 任務。
+airflow-init：初始化腳本，用於檢查 Airflow 版本、資源可用性等。
+4. Pinot（數據庫查詢和分析）
+包含三個 Pinot 服務：
+pinot-controller：負責管理和控制 Pinot 集群。
+pinot-broker 和 pinot-server：用於處理查詢請求和服務數據。
+所有 Pinot 服務都依賴 Zookeeper 來協調集群信息。
+5. Superset
+superset 是一個數據可視化工具，通常用於展示和分析數據。
+使用 Dockerfile 構建 Superset，暴露 8088 端口。
+6. 網絡 (networks)
+定義了一個共享的名為 ctwang 的網絡，使得所有的服務可以通過內部網絡進行通信。
+小結
+這個 docker-compose.yml 文件配置了一個完整的數據工程工作流，包括以下功能：
+
+數據協調（通過 Zookeeper 和 Kafka）。
+數據存儲和計算（通過 Postgres 和 Airflow）。
+數據查詢（通過 Pinot）。
+數據可視化（通過 Superset）。
