@@ -1,0 +1,20 @@
+[2024-11-04T21:49:59.238+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dimension_batch_ingestion.ingest_customer_dim scheduled__2024-11-03T00:00:00+00:00 [queued]>
+[2024-11-04T21:49:59.404+0000] {taskinstance.py:1157} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dimension_batch_ingestion.ingest_customer_dim scheduled__2024-11-03T00:00:00+00:00 [queued]>
+[2024-11-04T21:49:59.414+0000] {taskinstance.py:1359} INFO - Starting attempt 1 of 1
+[2024-11-04T21:49:59.696+0000] {taskinstance.py:1380} INFO - Executing <Task(BashOperator): ingest_customer_dim> on 2024-11-03 00:00:00+00:00
+[2024-11-04T21:49:59.812+0000] {standard_task_runner.py:57} INFO - Started process 4055 to run task
+[2024-11-04T21:49:59.899+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'dimension_batch_ingestion', 'ingest_customer_dim', 'scheduled__2024-11-03T00:00:00+00:00', '--job-id', '335', '--raw', '--subdir', 'DAGS_FOLDER/loader_dag.py', '--cfg-path', '/tmp/tmpl0kv8_nj']
+[2024-11-04T21:49:59.916+0000] {standard_task_runner.py:85} INFO - Job 335: Subtask ingest_customer_dim
+[2024-11-04T21:50:01.351+0000] {task_command.py:415} INFO - Running <TaskInstance: dimension_batch_ingestion.ingest_customer_dim scheduled__2024-11-03T00:00:00+00:00 [running]> on host 5840299c91cd
+[2024-11-04T21:50:02.610+0000] {taskinstance.py:1660} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='ctwang' AIRFLOW_CTX_DAG_ID='dimension_batch_ingestion' AIRFLOW_CTX_TASK_ID='ingest_customer_dim' AIRFLOW_CTX_EXECUTION_DATE='2024-11-03T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-11-03T00:00:00+00:00'
+[2024-11-04T21:50:02.633+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-11-04T21:50:02.639+0000] {subprocess.py:75} INFO - Running command: ['/bin/bash', '-c', 'curl -X POST -F file=@/opt/***/customer_dim_large_data.csv -H "Content-Type: multipart/form-data" "http://pinot-controller:9000/ingestFromFile?tableNameWithType=customer_dim_OFFLINE&batchConfigMapStr=%7B%22inputFormat%22%3A%22csv%22%2C%22recordReader.prop.delimiter%22%3A%22%2C%22%7D"']
+[2024-11-04T21:50:02.772+0000] {subprocess.py:86} INFO - Output:
+[2024-11-04T21:50:03.223+0000] {subprocess.py:93} INFO -   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+[2024-11-04T21:50:03.226+0000] {subprocess.py:93} INFO -                                  Dload  Upload   Total   Spent    Left  Speed
+[2024-11-04T21:50:08.546+0000] {subprocess.py:93} INFO -   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  8465    0     0  100  8465      0   6978  0:00:01  0:00:01 --:--:--  6978100  8465    0     0  100  8465      0   3821  0:00:02  0:00:02 --:--:--  3821100  8465    0     0  100  8465      0   2630  0:00:03  0:00:03 --:--:--  2630100  8465    0     0  100  8465      0   2006  0:00:04  0:00:04 --:--:--  2006100  8465    0     0  100  8465      0   1621  0:00:05  0:00:05 --:--:--  1621100  8576  100   111  100  8465     20   1590  0:00:05  0:00:05 --:--:--    27
+[2024-11-04T21:50:08.556+0000] {subprocess.py:93} INFO - {"status":"Successfully ingested file into table: customer_dim_OFFLINE as segment: customer_dim_1730757004864"}
+[2024-11-04T21:50:08.558+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2024-11-04T21:50:08.705+0000] {taskinstance.py:1398} INFO - Marking task as SUCCESS. dag_id=dimension_batch_ingestion, task_id=ingest_customer_dim, execution_date=20241103T000000, start_date=20241104T214959, end_date=20241104T215008
+[2024-11-04T21:50:08.864+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2024-11-04T21:50:08.923+0000] {taskinstance.py:2776} INFO - 0 downstream tasks scheduled from follow-on schedule check
