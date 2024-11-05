@@ -42,18 +42,8 @@ To run this project locally, you need:
 
    Make sure Docker is installed and running on your machine. The `docker-compose.yml` file will set up all the required services.
 
-3. **Simulate Financial Data**
 
-   Use the provided Python scripts to simulate financial data. The scripts are located in the `dags/` folder.
-
-   ```sh
-   python data_generators/account_dim_generator.py
-   python data_generators/branch_dim_generator.py
-   python data_generators/customer_dim_generator.py
-   python data_generators/transaction_facts_generator.py
-   ```
-
-4. **Start the Services**
+3. **Start the Services**
 
    Run the following command to start Airflow, Redpanda, Pinot, and Superset:
 
@@ -61,7 +51,7 @@ To run this project locally, you need:
    docker-compose up -d
    ```
 
-5. **Access Services**
+4. **Access Services**
    
    - **Airflow**: Access the Airflow UI at [http://localhost:8080](http://localhost:8080)
    - **Redpanda**: Broker URL is available on `localhost:9092`
